@@ -9,7 +9,22 @@ public class Gen {
 		drehung=drehungPar;
 	}
 	public void mutate (ArrayList <Gen> neueDNA) {
-		neueDNA.add(new Gen (typ, drehung, advance));
+		int neuerTyp=typ;
+		int neueDrehung=drehung;
+		int neuesAdvance=advance;
+		if (Math.random()<0.1) {
+			neueDrehung=drehung-(int)(Math.random()*30)+15;
+		}
+		if (Math.random()<0.01) {
+			neuerTyp=(int)(Math.random()*10);
+		}
+		if (Math.random()<0.1) {
+			neuesAdvance=advance-(int)(Math.random()*4)+2;
+		}
+		neueDNA.add(new Gen (neuerTyp, neueDrehung, neuesAdvance));
+		if (Math.random()<0.01) {
+			neueDNA.add(new Gen (neuerTyp, neueDrehung, neuesAdvance));
+		}
 	}
 	public Typ getTyp () {
 		int i = typ%3;

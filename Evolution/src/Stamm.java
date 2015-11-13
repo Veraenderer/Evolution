@@ -7,8 +7,8 @@ public class Stamm {
 		drehung=drehungPar;
 		x=xPar;
 		y=yPar;
-		xEnde=(int)(10*Math.cos(x));
-		yEnde=(int)(10*Math.sin(x));
+		xEnde=x+(int)(10*Math.cos(Math.toRadians(drehungPar)));
+		yEnde=y+(int)(10*Math.sin(Math.toRadians(drehungPar)));
 	}
 	public int getDrehung() {
 		return drehung;

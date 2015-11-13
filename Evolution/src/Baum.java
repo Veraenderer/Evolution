@@ -42,6 +42,9 @@ public class Baum {
 	public void setEnergie (int energiePar) {
 		energie=energiePar;
 	}
+	public void setOrt (int ortPar) {
+		ort=ortPar;
+	}
 	public int getEnergie () {
 		return energie;
 	}
@@ -55,7 +58,7 @@ public class Baum {
 			Gen gen=dna.get(i);
 			int advance = pointer+gen.getAdvance();
 			if (staemme.size()==0||(advance<0)) {
-				x=0;
+				x=ort;
 				y=0;
 				pointer=-1;
 			}
@@ -65,6 +68,7 @@ public class Baum {
 				y=staemme.get(pointer).getY();
 			}
 			else {
+				pointer=advance;
 				x=staemme.get(pointer).getX();
 				y=staemme.get(pointer).getY();
 			}
