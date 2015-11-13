@@ -1,15 +1,27 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Testgebiet {
 	public ArrayList <Baum> baeume;
+	private static int anzahlBaeume;
 	private Screen screen;
 	public Testgebiet () {
-		erstelleErsteBaeume (100);
+		anzahlBaeume=100;
+		erstelleErsteBaeume (anzahlBaeume);
+		//testBaum();
 		screen=new Screen(baeume);
+		
 		for (int i=0;i<10000;i++) {
 			turn();
 			System.out.println ("Generation: "+i);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
 	}
 	public void turn () {
 		ArrayList <Baum> neueGeneration = new ArrayList<Baum> ();
@@ -18,21 +30,28 @@ public class Testgebiet {
 			int energie=0;
 			for (int j=0;j<baum.getBlaetter().size();j++) {
 				Blatt blatt = baum.getBlaetter().get(j);
-				if (blatt.getY()>=0) {
-					energie=energie+6;
+				if (blatt.getY()<=0) {
+					energie=energie+((-blatt.getY()+1)/4);
 				}
 				energie--;
 			}
 			for (int j=0;j<baum.getStaemme().size();j++) {
 				energie--;
 			}
-			for (int j=0;i<energie;i++) {
-				neueGeneration.add(baum.erzeugeNachkommen());
-			}
+			baum.setEnergie(energie);
 		}
-		for (int i=0;i<neueGeneration.size();i++) {
-			neueGeneration.get(i).setOrt(i*10);
-			neueGeneration.get(i).erstelleBaum();;
+		Collections.sort(baeume);
+		System.out.println ("groesste "+baeume.get(0).getEnergie());
+		System.out.println ("kleinste "+baeume.get(99).getEnergie());
+		for (int i=0;i<anzahlBaeume;i=i+2) {
+			Baum baum = baeume.get(i);
+			Baum neuerBaum=baum.erzeugeNachkommen();
+			neuerBaum.setOrt(i*10);
+			neueGeneration.add(neuerBaum);
+			neuerBaum=baum.erzeugeNachkommen();
+			neuerBaum.setOrt((i+1)*10);
+			neueGeneration.add(neuerBaum);
+
 		}
 		baeume=neueGeneration;
 		screen.uebergebeBaume(baeume);
@@ -48,5 +67,15 @@ public class Testgebiet {
 			}
 			baeume.add(new Baum (gene,i));
 		}
+	}
+	public void testBaum () {
+		baeume=new ArrayList<Baum> ();
+		ArrayList<Gen> gene = new ArrayList<Gen> ();
+		gene.add(new Gen (0,270,1));
+		gene.add(new Gen (0,270,1));
+		baeume.add(new Baum (gene, 100));
+		
+		
+		
 	}
 }

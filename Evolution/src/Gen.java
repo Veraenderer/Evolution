@@ -7,6 +7,7 @@ public class Gen {
 	public Gen (int typPar, int drehungPar,int advancePar) {
 		typ=typPar;
 		drehung=drehungPar;
+		advance=advancePar;
 	}
 	public void mutate (ArrayList <Gen> neueDNA) {
 		int neuerTyp=typ;

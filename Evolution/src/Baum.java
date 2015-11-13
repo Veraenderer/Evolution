@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Baum {
+public class Baum implements Comparable<Baum> {
 	private ArrayList <Gen> dna;
 	private int ort;
 	private int age;
@@ -64,20 +64,34 @@ public class Baum {
 			}
 			else if (advance>=staemme.size()) {
 				pointer=staemme.size()-1;
-				x=staemme.get(pointer).getX();
-				y=staemme.get(pointer).getY();
+				x=staemme.get(pointer).getxEnde();
+				y=staemme.get(pointer).getyEnde();
 			}
 			else {
 				pointer=advance;
-				x=staemme.get(pointer).getX();
-				y=staemme.get(pointer).getY();
+				x=staemme.get(pointer).getxEnde();
+				y=staemme.get(pointer).getyEnde();
 			}
 			if (gen.getTyp()==Typ.BLATT) {
-				blaetter.add(new Blatt(x,y));
+				boolean vorhanden=false;
+				for (int j=0;j<blaetter.size();j++) {
+					if (blaetter.get(j).getX()==x||blaetter.get(j).getY()==y) {
+						vorhanden=true;
+						break;
+					}
+				}
+				if (!vorhanden) {
+					blaetter.add(new Blatt(x,y));
+				}
 			}
 			else if (gen.getTyp()==Typ.STAMM) {
 				staemme.add(new Stamm (gen.getDrehung(),x,y));
 			}
 		}
+	}
+	@Override
+	public int compareTo(Baum baumPar) {
+
+		return baumPar.getEnergie()-energie;
 	}
 }
